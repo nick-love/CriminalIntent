@@ -7,11 +7,17 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 
 public class CrimeFragment extends Fragment {
-	private Crime mCrime;	//7.7
+	private Crime mCrime;		//7.7
 	private EditText mTitleField;	//7.9
+	private Button mDateButton;		//8.5
+	private CheckBox mSolvedCheckBox;	//8.5
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -29,7 +35,7 @@ public class CrimeFragment extends Fragment {
 		mTitleField.addTextChangedListener(new TextWatcher() {
 			public void onTextChanged(
 					CharSequence c, int start, int before, int count) {
-				mCrime.setmTitle(c.toString());
+				mCrime.setTitle(c.toString());
 			}
 			
 			public void beforeTextChanged(
@@ -39,6 +45,18 @@ public class CrimeFragment extends Fragment {
 			
 			public void afterTextChanged(Editable c) {
 				//Left blank
+			}
+		});
+		
+		mDateButton = (Button)v.findViewById(R.id.crime_date);	//8.6
+		mDateButton.setText(mCrime.getDate().toString());
+		mDateButton.setEnabled(false);
+		
+		mSolvedCheckBox = (CheckBox)v.findViewById(R.id.crime_solved);	//8.7
+		mSolvedCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// Set the crime's solved property
+				mCrime.setSolved(isChecked);
 			}
 		});
 		
